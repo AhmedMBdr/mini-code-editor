@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <aside class="text-container">
+        <aside class="toolbar">
+            <div class = 'html-button'>
+                <img src="images/html.svg" alt="HTML">
+                <input type="text" id="html" placeholder="index">
+            </div>
+            <div class = 'css-button'>
+                <img src="images/css.svg" alt="CSS">
+                <input type="text" id="css" placeholder="style">
+            </div>
+            <div class = 'js-button'>
+                <img src="images/js.svg" alt="JavaScript">
+                <input type="text" id="js" placeholder="script">
+            </div>
+        </aside>
+        <div class="text-area" spellcheck="false">
+            <textarea class="editor"></textarea>
+        </div>
+        <div class="settings">
+            <img src="images/gear.svg" alt="Settings" class="setting">
+            <div class="rectangle">
+                <div class="circle">
+                    <img src="images/sun.svg" alt="Light Mode" class="sun">
+                    <img src="images/moon.svg" alt="Dark Mode" class="moon">
+                </div>
+            </div>
+        </div>
+    </aside>
+    <iframe class="preview"></iframe>
+    <script src="script.js"></script>
+</body>
+
+</html>
