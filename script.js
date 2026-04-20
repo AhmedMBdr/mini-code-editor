@@ -87,10 +87,12 @@ function applyTheme() {
     "--code",
     codeColors[prefersDark]["background"],
   );
+  if(activeFile === "html"){
   document.documentElement.style.setProperty(
     "--codeText",
     codeColors[prefersDark]["color"],
   );
+}
   colorSelectedButton();
 }
 const fileTextarea = localStorage.getItem("textarea")
