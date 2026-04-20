@@ -10,7 +10,7 @@ A lightweight, browser-based code editor for HTML, CSS, and JavaScript. Write co
 
 ## 📸 Screenshot
 
-![Editor Screenshot](./screenshot.png)  
+![Editor Screenshot](./images/screenshot.png)  
 ---
 
 ## ✨ Features
