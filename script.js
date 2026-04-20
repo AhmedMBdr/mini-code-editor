@@ -52,12 +52,7 @@ const codeColors = {
 const toggleTheme = document.querySelector(".rectangle");
 let prefersDark = "light";
 let activeFile = "html";
-function fixAnomaly(){
-        fileTextarea.js = fileTextarea.js.replaceAll("</script>", "");
-        fileTextarea.css = fileTextarea.css.replaceAll("</style>", "");
-        fileTextarea.html = fileTextarea.html.replaceAll("</html>", "");
 
-}
 function applyTheme() {
 
 	document.documentElement.style.setProperty("--primary", theme[prefersDark][1]);
@@ -142,7 +137,6 @@ toolbarButtons.forEach(child => {
 });
 runButton.addEventListener("click", () => {
     const iframe = document.querySelector(".preview");
-    fixAnomaly();
     iframe.srcdoc = `<!DOCTYPE html>
 <html lang="en">
 
@@ -156,7 +150,7 @@ runButton.addEventListener("click", () => {
     <main>
         ${fileTextarea.html}
     </main>
-	<script>${fileTextarea.js}</script>
+	<script>${fileTextarea.js.replace(/<\/script>/g, "<\\/script>")}</script>
 </body>
 
 </html>`;
@@ -168,11 +162,14 @@ textarea.addEventListener("input", (e) => {
         
         text = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         if(activeFile === "js"){
-            text = text.replace("const", "<span style='color: tomato;'>const</span>");
+            text = text.replace(
+              /\bconst\b/g,
+              "<span style='color: tomato;'>const</span>",
+            );
         }
         else if(activeFile === "css"){
-            text = text.replace("px", `<span style='color: ${codeColor[activeFile]["elements"]};'>px</span>`);
-            text = text.replace("%", `<span style='color: ${codeColor[activeFile]["elements"]};'>%</span>`);
+            text = text.replace(/px/g, `<span style='color: ${codeColor[activeFile]["elements"]};'>px</span>`);
+            text = text.replace(/%/g, `<span style='color: ${codeColor[activeFile]["elements"]};'>%</span>`);
         }
         else
         {
@@ -184,6 +181,11 @@ textarea.addEventListener("input", (e) => {
 
             code.innerHTML = text;
             fileCode[activeFile] = text;
+});
+textarea.addEventListener("scroll", () => {
+  const highlight = document.querySelector(".highlight");
+  highlight.scrollTop = textarea.scrollTop;
+  highlight.scrollLeft = textarea.scrollLeft;
 });
 toggleTheme.addEventListener("click", () => {
     const circle = document.querySelector(".circle");
