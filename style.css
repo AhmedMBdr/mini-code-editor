@@ -2,9 +2,13 @@
     --primary: rgb(240, 240, 240);
     --secondary: rgb(200, 200, 200);
     --third: rgb(220, 220, 220);
+    --code: white;
+    --codeText:black;
     --text: black;
 }
-
+#tab-size{
+    background-color: var(--code);
+}
 *{
     margin: 0;
     padding: 0;
@@ -20,10 +24,7 @@ html, body {
     height: 100%;
 }
 body {
-    background-color: var(--primary);
-    color: var(--text);
     display: flex;
-    color : var(--text);
 }
 .settings-dark{
     position: absolute;
@@ -58,32 +59,25 @@ body {
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
-    border-right : 1px solid var(--secondary);
+    border-right : 2px solid var(--secondary);
 
 }
 .toolbar {
     height: 5%;
     background-color: var(--primary);
-    border-bottom : 1px solid var(--secondary);
+    border-bottom : 2px solid var(--secondary);
     width: 100%;
     display : flex;
 }
 
-.popup-background{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: 0.5;
-}
 
 
 .preview {
     width:calc(100% - 575px);
-    background-color: var(--primary);
     border:none;
+    display : flex;
+    justify-content: center;
+    align-items: center;
 }
 .settings{
     display : flex;
@@ -93,7 +87,7 @@ body {
     height:10%;
     align-items: center;
     background-color: var(--primary);
-    border-top: 1px solid var(--secondary);
+    border-top: 2px solid var(--secondary);
 }
 .setting{
     cursor: pointer;
@@ -101,19 +95,18 @@ body {
 }
 .setting.active{
     rotate : -60deg;
-    transition : rotate 0.6s;
 }
 
 .settings-menu{
     position: absolute;
-    transform: translate(-20% ,-30%);
+    transform: translate(-40% ,-100%);
     background-color: var(--primary);
-    border : 1px solid var(--secondary);
+    border : 2px solid var(--secondary);
     padding : 10px;
     display : none;
     z-index : 1000;
-    width: 200px;
-    height: 200px;
+    width : fit-content;
+    height:fit-content;
 }
 
 label{
@@ -123,32 +116,30 @@ img:not(.sun):not(.moon){
     max-width: 50%;
     max-height: 50%;
 }
-.sun , .sun.active{
+.sun{
     max-height:75%;
     transition : display 0.6s;
 }
 .sun.active{
     display : none;
-    transition : display 0.6s;
 }
-.moon , .moon.active{
+.moon{
     display : none;
     max-height:75%;
     transition : display 0.6s;  
 }
 .moon.active{
     display : block;
-    transition : display 0.6s;  
 }   
-.rectangle, .rectangle.active {
+.rectangle{
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 25px;
+    width: 17.4%;
+    height: 27.1%;
     box-sizing: border-box;
-    border-radius: 12.5px;
+    border-radius: 13px;
     border : 3px solid black;
     background-color: white;
     cursor : pointer;
@@ -157,13 +148,11 @@ img:not(.sun):not(.moon){
 .rectangle.active{
     background-color: black;
     border-color: white;
-    transition: background-color 0.6s , border-color 0.6s;
 }
-.circle , .circle.active {
+.circle {
     background-color: white;
-    transform :translate(-40%);
+    transform :translate(-75%);
     display: flex;
-    align-self: flex-start;
     justify-content: center;
     align-items: center;
     width:50px;
@@ -173,10 +162,9 @@ img:not(.sun):not(.moon){
     transition :  transform 0.6s , background-color 0.6s , border-color 0.6s;
 }
 .circle.active {
-    transform: translate(200%);
+    transform: translate(75%);
     background-color: black;
     border-color: white;
-    transition :  transform 0.6s , background-color 0.6s , border-color 0.6s;
 }
 input::placeholder{
     color:var(--text);
@@ -194,28 +182,64 @@ input {
 input:focus{
     outline: none;
 }
-.popup-body{
-    display : flex;
-    flex-direction: column;
-    gap : 10px;
+.run{
+    width: 100px;
+    height: 20px;
+    position : fixed;
+    top:65px;
+    z-index: 100;
+    left : 440px;
+    background-color: rgb(99,209,109);
+    border: 1px solid rgb(96,152,44);
+    outline : 1px solid rgb(46,71,31);
+    cursor : pointer;
 }
-
-
+.run:hover{
+    background-color: rgb(96,152,44);
+}
 .text-area {
     width: 100%;
     height: 100%;
     background-color: var(--primary);
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
 }
-.editor{
-    width : 100%;
-    height: 99%;
-    padding : 10px;
-    background-color: var(--primary);
-    resize: none;
-    border: none;
+ .editor-container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.editor , .highlight{
+    position: absolute;
+    top : 10px;
+    left: 10px;
+    width : 95%;
+    height: 95%;
+    padding : 40px;
+   font-family: monospace;
+   font-size : 14px;
+   line-height: 1.5;
+   white-space : pre-wrap;
+   overflow: auto;
+   resize: none;
+   border: none;
+}
+.highlight{
+    pointer-events: none;
+    color : var(--codeText);
+    background-color: var(--code);
+}
+.editor {
+    background-color: transparent;
+    color: transparent;
+    caret-color: var(--codeText);
+    z-index : 2;
+}
+label{
     color : var(--text);
 }
-
 .editor:focus{
     outline: none;
 }

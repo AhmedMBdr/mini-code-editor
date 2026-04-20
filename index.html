@@ -11,23 +11,34 @@
 <body>
     <aside class="text-container">
         <aside class="toolbar">
-            <div class = 'html-button'>
+            <div class='html-button'>
                 <img src="images/html.svg" alt="HTML">
-                <input type="text" id="html" placeholder="index">
+                <input type="text" id="html" placeholder="index" name="html">
             </div>
-            <div class = 'css-button'>
+            <div class='css-button'>
                 <img src="images/css.svg" alt="CSS">
-                <input type="text" id="css" placeholder="style">
+                <input type="text" id="css" placeholder="style" name="css">
             </div>
-            <div class = 'js-button'>
+            <div class='js-button'>
                 <img src="images/js.svg" alt="JavaScript">
-                <input type="text" id="js" placeholder="script">
+                <input type="text" id="js" placeholder="script" name="js">
             </div>
         </aside>
         <div class="text-area" spellcheck="false">
-            <textarea class="editor"></textarea>
+            <button class="run">Run &gt;</button>
+            <div class="editor-container">
+                <pre class="highlight"><code></code></pre>
+                <textarea class="editor"></textarea>
+            </div>
+
         </div>
         <div class="settings">
+            <div class="settings-menu">
+                <div class="setting-item">
+                    <label for="tab-size">Tab Size:</label>
+                    <input type="number" id="tab-size" min="1" value="4">
+                </div>
+            </div>
             <img src="images/gear.svg" alt="Settings" class="setting">
             <div class="rectangle">
                 <div class="circle">
