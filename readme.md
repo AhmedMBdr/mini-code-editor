@@ -2,7 +2,7 @@
 
 A lightweight, browser-based code editor for HTML, CSS, and JavaScript. Write code, see live preview, and enjoy a clean interface with dark/light mode, customizable tab size, and local storage persistence.
 
-![Live Demo](https://img.shields.io/badge/demo-live-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue) ![Vanilla JS](https://img.shields.io/badge/vanilla-JS-yellow)
+![Live Demo](https://img.shields.io/badge/demo-live-brightgreen) ![Vanilla JS](https://img.shields.io/badge/vanilla-JS-yellow)
 
 🔗 **Live Demo:** [https://ahmedmbdr.github.io/mini-code-editor/](https://ahmedmbdr.github.io/mini-code-editor/)
 
