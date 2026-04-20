@@ -15,23 +15,23 @@ A lightweight, browser-based code editor for HTML, CSS, and JavaScript. Write co
 
 ## ✨ Features
 
-- **Live Preview** – Run your HTML/CSS/JS code instantly inside an iframe.
-- **Syntax Highlighting** – Basic highlighting for HTML tags, CSS units, and JavaScript keywords.
-- **Dark / Light Mode** – Toggle themes with a smooth animated switch.
-- **Persistent Storage** – Your code is automatically saved in `localStorage` – close the page and come back later.
-- **Adjustable Tab Size** – Choose how many spaces the Tab key inserts (1–8, default 4).
-- **Maximize / Minimize** – Focus entirely on the code editor or the preview area.
-- **Responsive Layout** – Works on different screen sizes (though best on desktop).
-- **Custom Icons** – All icons (HTML, CSS, JS, gear, sun, moon, maximize, minimize) were designed from scratch using **Inkscape**.
+- **Live Preview** – Run your HTML/CSS/JS code instantly.
+- **Basic Syntax Highlighting**
+- **Dark / Light Mode**
+- **Persistent Storage**
+- **Adjustable Tab Size**
+- **Maximize / Minimize**
+- **Responsive Layout**
+- **Custom Icons** – All icons were designed from scratch using **Inkscape**.
 
 ---
 
 ## 🛠️ Built With
 
-- **HTML5** – Structure and content
-- **CSS3** – Styling, theming with CSS variables, flexbox layout
-- **JavaScript (Vanilla)** – Editor logic, syntax highlighting, localStorage, event handling
-- **Inkscape** – Custom vector icons (no external icon libraries)
+- **HTML5**
+- **CSS3**
+- **JavaScript**
+- **Inkscape** - Icons
 
 ---
 
@@ -48,5 +48,3 @@ A lightweight, browser-based code editor for HTML, CSS, and JavaScript. Write co
 All your code is saved automatically – refresh the page and it's still there!
 
 ---
-
-## 📂 Project Structure
