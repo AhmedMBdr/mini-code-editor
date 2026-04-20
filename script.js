@@ -6,15 +6,17 @@ const settingsButton = document.querySelector(".setting");
 const settingsMenu = document.querySelector(".settings-menu");
 const runButton = document.querySelector(".run");
 const dark = ["black", "rgb(30, 30, 30)", "rgb(70, 70, 70)", "rgb(50, 50, 50)"];
-const light = ["white","rgb(240, 240, 240)", "rgb(220, 220, 220)", "rgb(200, 200, 200)"];
+const light = [
+  "white",
+  "rgb(240, 240, 240)",
+  "rgb(220, 220, 220)",
+  "rgb(200, 200, 200)",
+];
 const code = document.querySelector(".highlight code");
-const theme = 
-{light : light,
-dark : dark,
-};
+const theme = { light: light, dark: dark };
 const map = {
-    light : "dark",
-    dark : "light",
+  light: "dark",
+  dark: "light",
 };
 const codeColor = {
   html: {
@@ -40,28 +42,42 @@ const codeColor = {
   },
 };
 const codeColors = {
-    light : {
-        background : "white",
-        color : "black",
-    },
-    dark : {
-        background : "rgb(39, 40, 34)",
-        color : "white",
-    }
-}
+  light: {
+    background: "white",
+    color: "black",
+  },
+  dark: {
+    background: "rgb(39, 40, 34)",
+    color: "white",
+  },
+};
 const toggleTheme = document.querySelector(".rectangle");
 let prefersDark = localStorage.getItem("theme") || "light";
 let activeFile = "html";
 
 function applyTheme() {
-
-	document.documentElement.style.setProperty("--primary", theme[prefersDark][1]);
-	document.documentElement.style.setProperty("--secondary", theme[prefersDark][2]);
-	document.documentElement.style.setProperty("--third", theme[prefersDark][3]);
-	document.documentElement.style.setProperty("--text", theme[map[prefersDark]][0]);
-    document.documentElement.style.setProperty("--code", codeColors[prefersDark]["background"]);
-    document.documentElement.style.setProperty("--codeText", codeColors[prefersDark]["color"]);
-    colorSelectedButton();
+  document.documentElement.style.setProperty(
+    "--primary",
+    theme[prefersDark][1],
+  );
+  document.documentElement.style.setProperty(
+    "--secondary",
+    theme[prefersDark][2],
+  );
+  document.documentElement.style.setProperty("--third", theme[prefersDark][3]);
+  document.documentElement.style.setProperty(
+    "--text",
+    theme[map[prefersDark]][0],
+  );
+  document.documentElement.style.setProperty(
+    "--code",
+    codeColors[prefersDark]["background"],
+  );
+  document.documentElement.style.setProperty(
+    "--codeText",
+    codeColors[prefersDark]["color"],
+  );
+  colorSelectedButton();
 }
 const fileTextarea = localStorage.getItem("textarea")
   ? JSON.parse(localStorage.getItem("textarea"))
@@ -78,83 +94,86 @@ const fileCode = localStorage.getItem("code")
       js: ``,
     };
 window.onload = () => {
-    const htmlButton = toolbar.querySelector(".html-button");
-	htmlButton.style.backgroundColor = theme[prefersDark][0] ;
-    activeFile = "html";
-    if(prefersDark === "dark"){
-        const circle = document.querySelector(".circle");
-        const sun = document.querySelector(".sun");
-        const moon = document.querySelector(".moon");
-        toggleTheme.classList.add("active");
-        circle.classList.add("active");
-        sun.classList.add("active");
-        moon.classList.add("active");
-        applyTheme();
-    }
-    textarea.value = fileTextarea[activeFile]
-    code.innerHTML = fileCode[activeFile];
+  const htmlButton = toolbar.querySelector(".html-button");
+  htmlButton.style.backgroundColor = theme[prefersDark][0];
+  activeFile = "html";
+  if (prefersDark === "dark") {
+    const circle = document.querySelector(".circle");
+    const sun = document.querySelector(".sun");
+    const moon = document.querySelector(".moon");
+    toggleTheme.classList.add("active");
+    circle.classList.add("active");
+    sun.classList.add("active");
+    moon.classList.add("active");
+    applyTheme();
+  }
+  textarea.value = fileTextarea[activeFile];
+  code.innerHTML = fileCode[activeFile];
 };
 let tabSize = 4;
 const tabSizeInput = settingsMenu.querySelector("#tab-size");
 tabSizeInput.addEventListener("change", () => {
-    tabSize = parseInt(tabSizeInput.value);
-    console.log(`Tab size set to ${tabSize}`);
+  tabSize = parseInt(tabSizeInput.value);
+  console.log(`Tab size set to ${tabSize}`);
 });
 
 settingsButton.addEventListener("click", () => {
-    if (settingsMenu.style.display === "block") {
-        settingsMenu.style.display = "none";
-    } else {
-        settingsMenu.style.display = "block";
-    }
-	settingsButton.classList.toggle("active");
+  if (settingsMenu.style.display === "block") {
+    settingsMenu.style.display = "none";
+  } else {
+    settingsMenu.style.display = "block";
+  }
+  settingsButton.classList.toggle("active");
 });
 setting.appendChild(settingsMenu);
 textarea.addEventListener("keydown", (e) => {
-    if (e.key === "Tab") {
-        e.preventDefault();
+  if (e.key === "Tab") {
+    e.preventDefault();
 
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
 
-        textarea.value =
-            textarea.value.substring(0, start) +
-            " ".repeat(tabSize) +
-            textarea.value.substring(end);
+    textarea.value =
+      textarea.value.substring(0, start) +
+      " ".repeat(tabSize) +
+      textarea.value.substring(end);
 
-        textarea.selectionStart = textarea.selectionEnd = start + tabSize;
-    }
+    textarea.selectionStart = textarea.selectionEnd = start + tabSize;
+  }
 });
 function colorSelectedButton() {
-    toolbarButtons.forEach(button => {
-        if (button.classList.contains(`${activeFile}-button`)) {
-            button.style.backgroundColor = theme[prefersDark][0];
-        } else {
-            button.style.backgroundColor = "transparent";
-        }
-    });
+  toolbarButtons.forEach((button) => {
+    if (button.classList.contains(`${activeFile}-button`)) {
+      button.style.backgroundColor = theme[prefersDark][0];
+    } else {
+      button.style.backgroundColor = "transparent";
+    }
+  });
 }
-toolbarButtons.forEach(child => {
-    child.addEventListener("click", () => {
-        child.style.backgroundColor = theme[prefersDark][0];
-        activeFile = child.classList.contains("html-button") ? "html" : child.classList.contains("css-button") ? "css" : "js";
-        textarea.value = fileTextarea[activeFile];
-        code.innerHTML = fileCode[activeFile];
-        toolbarButtons.forEach(sibling => {
-            if (sibling !== child) {
-                sibling.style.backgroundColor = "transparent";
-            }
-        });
+toolbarButtons.forEach((child) => {
+  child.addEventListener("click", () => {
+    child.style.backgroundColor = theme[prefersDark][0];
+    activeFile = child.classList.contains("html-button")
+      ? "html"
+      : child.classList.contains("css-button")
+        ? "css"
+        : "js";
+    textarea.value = fileTextarea[activeFile];
+    code.innerHTML = fileCode[activeFile];
+    toolbarButtons.forEach((sibling) => {
+      if (sibling !== child) {
+        sibling.style.backgroundColor = "transparent";
+      }
+    });
     document.documentElement.style.setProperty(
       "--codeText",
       codeColor[activeFile]["text"][prefersDark],
     );
-
-    });
+  });
 });
 runButton.addEventListener("click", () => {
-    const iframe = document.querySelector(".preview");
-    iframe.srcdoc = `<!DOCTYPE html>
+  const iframe = document.querySelector(".preview");
+  iframe.srcdoc = `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -183,7 +202,7 @@ textarea.addEventListener("input", () => {
 
   if (activeFile === "html") {
     refined = refined.replace(
-      /(&lt;\/?[a-zA-Z]*[^&gt;]*&gt;)/g,
+      /(&lt;\/?[a-zA-Z0-9][\s\S]*?&gt;)/g,
       `<span style='color: ${codeColor.html.elements};'>$1</span>`,
     );
   } else if (activeFile === "css") {
@@ -218,14 +237,14 @@ textarea.addEventListener("scroll", () => {
   highlight.scrollLeft = textarea.scrollLeft;
 });
 toggleTheme.addEventListener("click", () => {
-    const circle = document.querySelector(".circle");
-    const sun = document.querySelector(".sun");
-    const moon = document.querySelector(".moon");
-	toggleTheme.classList.toggle("active");
-	circle.classList.toggle("active");
-	sun.classList.toggle("active");
-	moon.classList.toggle("active");
-	prefersDark = map[prefersDark];
-    applyTheme();
-    localStorage.setItem("theme", prefersDark);
+  const circle = document.querySelector(".circle");
+  const sun = document.querySelector(".sun");
+  const moon = document.querySelector(".moon");
+  toggleTheme.classList.toggle("active");
+  circle.classList.toggle("active");
+  sun.classList.toggle("active");
+  moon.classList.toggle("active");
+  prefersDark = map[prefersDark];
+  applyTheme();
+  localStorage.setItem("theme", prefersDark);
 });
