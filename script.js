@@ -188,7 +188,7 @@ textarea.addEventListener("input", () => {
     );
   } else if (activeFile === "css") {
     refined = refined.replace(
-      /(px|%|rem|vh|vw|em)/g,
+      /(\b(?:px|rem|vh|vw|em)\b|%|!important)/g,
       `<span style='color: ${codeColor.css.elements};'>$1</span>`,
     );
   } else if (activeFile === "js") {
