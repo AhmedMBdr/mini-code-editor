@@ -173,33 +173,38 @@ runButton.addEventListener("click", () => {
 </html>`;
 });
 textarea.addEventListener("input", () => {
-    fileTextarea[activeFile] = textarea.value;
-    let text = textarea.value;
-    
-        
-        text = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        if(activeFile === "js"){
-            text = text.replace(
-              /\bconst\b/g,
-              "<span style='color: tomato;'>const</span>",
-            );
-        }
-        else if(activeFile === "css"){
-            text = text.replace(/px/g, `<span style='color: ${codeColor[activeFile]["elements"]};'>px</span>`);
-            text = text.replace(/%/g, `<span style='color: ${codeColor[activeFile]["elements"]};'>%</span>`);
-        }
-        else
-        {
-            text = text.replace(
-        /(&lt;\/?[a-zA-Z][^&gt;]*&gt;)/g,
-        `<span style='color: ${codeColor[activeFile]["elements"]};'>$1</span>`,
-        );}
-        text = text.replace(/\n/g, "<br>");
+  fileTextarea[activeFile] = textarea.value;
+  let text = textarea.value;
 
-            code.innerHTML = text;
-            fileCode[activeFile] = text;
-        localStorage.setItem("code", JSON.stringify(fileCode));
-        localStorage.setItem("textarea", JSON.stringify(fileTextarea));
+  let refined = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  if (activeFile === "html") {
+    refined = refined.replace(
+      /(&lt;\/?[a-zA-Z][^&gt;]*&gt;)/g,
+      `<span style='color: ${codeColor.html.elements};'>$1</span>`,
+    );
+  } else if (activeFile === "css") {
+    refined = refined.replace(
+      /(px|%|rem|vh|vw|em)/g,
+      `<span style='color: ${codeColor.css.elements};'>$1</span>`,
+    );
+  } else if (activeFile === "js") {
+    refined = refined.replace(
+      /\b(const|let|var|function|if|else|return|for|while)\b/g,
+      `<span style='color: tomato;'>$1</span>`,
+    );
+  }
+
+  refined = refined.replace(/\n/g, "<br>");
+
+  code.innerHTML = refined;
+  fileCode[activeFile] = refined;
+
+  localStorage.setItem("code", JSON.stringify(fileCode));
+  localStorage.setItem("textarea", JSON.stringify(fileTextarea));
 });
 textarea.addEventListener("scroll", () => {
   const highlight = document.querySelector(".highlight");

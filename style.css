@@ -188,7 +188,7 @@ input:focus{
     position : fixed;
     top:65px;
     z-index: 100;
-    left : 440px;
+    left : 440rem;
     background-color: rgb(99,209,109);
     border: 1px solid rgb(96,152,44);
     outline : 1px solid rgb(46,71,31);
