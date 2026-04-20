@@ -198,9 +198,9 @@ input:focus{
     width: 100px;
     height: 20px;
     position : absolute;
-    top:65px;
+    top:7%;
     z-index: 100;
-    left : 400px;
+    left : 21%;
     background-color: rgb(99,209,109);
     border: 1px solid rgb(96,152,44);
     outline : 1px solid rgb(46,71,31);
