@@ -183,7 +183,7 @@ textarea.addEventListener("input", () => {
 
   if (activeFile === "html") {
     refined = refined.replace(
-      /(&lt;\/?[a-zA-Z][^&gt;]*&gt;)/g,
+      /(&lt;\/?[a-zA-Z]*[^&gt;]*&gt;)/g,
       `<span style='color: ${codeColor.html.elements};'>$1</span>`,
     );
   } else if (activeFile === "css") {
