@@ -5,6 +5,8 @@ const setting = document.querySelector(".settings");
 const settingsButton = document.querySelector(".setting");
 const settingsMenu = document.querySelector(".settings-menu");
 const runButton = document.querySelector(".run");
+const maximizeButton = document.querySelector(".maximize");
+const minimizeButton = document.querySelector(".minimize");
 const dark = ["black", "rgb(30, 30, 30)", "rgb(70, 70, 70)", "rgb(50, 50, 50)"];
 const light = [
   "white",
@@ -51,6 +53,18 @@ const codeColors = {
     color: "white",
   },
 };
+maximizeButton.addEventListener("click", () => {
+    const textContainer = document.querySelector(".text-container");
+    textContainer.style.display = "none";
+    maximizeButton.style.display = "none";
+    minimizeButton.style.display = "block";
+});
+minimizeButton.addEventListener("click", () => {    
+    const textContainer = document.querySelector(".text-container");
+    textContainer.style.display = "flex";
+    maximizeButton.style.display = "block";
+    minimizeButton.style.display = "none";
+});
 const toggleTheme = document.querySelector(".rectangle");
 let prefersDark = localStorage.getItem("theme") || "light";
 let activeFile = "html";
