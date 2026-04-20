@@ -200,7 +200,7 @@ input:focus{
     position : absolute;
     top:65px;
     z-index: 100;
-    left : 440px;
+    left : 430px;
     background-color: rgb(99,209,109);
     border: 1px solid rgb(96,152,44);
     outline : 1px solid rgb(46,71,31);
