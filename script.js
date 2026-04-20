@@ -206,6 +206,12 @@ textarea.addEventListener("input", () => {
   localStorage.setItem("code", JSON.stringify(fileCode));
   localStorage.setItem("textarea", JSON.stringify(fileTextarea));
 });
+document.addEventListener("click", (e) => {
+  if (!settingsButton.contains(e.target) && !settingsMenu.contains(e.target)) {
+    settingsMenu.style.display = "none";
+    settingsButton.classList.remove("active");
+  }
+});
 textarea.addEventListener("scroll", () => {
   const highlight = document.querySelector(".highlight");
   highlight.scrollTop = textarea.scrollTop;
