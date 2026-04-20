@@ -50,7 +50,7 @@ const codeColors = {
     }
 }
 const toggleTheme = document.querySelector(".rectangle");
-let prefersDark = "light";
+let prefersDark = localStorage.getItem("theme") || "light";
 let activeFile = "html";
 
 function applyTheme() {
@@ -63,10 +63,36 @@ function applyTheme() {
     document.documentElement.style.setProperty("--codeText", codeColors[prefersDark]["color"]);
     colorSelectedButton();
 }
+const fileTextarea = localStorage.getItem("textarea")
+  ? JSON.parse(localStorage.getItem("textarea"))
+  : {
+      html: ``,
+      css: ``,
+      js: ``,
+    };
+const fileCode = localStorage.getItem("code")
+  ? JSON.parse(localStorage.getItem("code"))
+  : {
+      html: ``,
+      css: ``,
+      js: ``,
+    };
 window.onload = () => {
     const htmlButton = toolbar.querySelector(".html-button");
 	htmlButton.style.backgroundColor = theme[prefersDark][0] ;
     activeFile = "html";
+    if(prefersDark === "dark"){
+        const circle = document.querySelector(".circle");
+        const sun = document.querySelector(".sun");
+        const moon = document.querySelector(".moon");
+        toggleTheme.classList.add("active");
+        circle.classList.add("active");
+        sun.classList.add("active");
+        moon.classList.add("active");
+        applyTheme();
+    }
+    textarea.value = fileTextarea[activeFile]
+    code.innerHTML = fileCode[activeFile];
 };
 let tabSize = 4;
 const tabSizeInput = settingsMenu.querySelector("#tab-size");
@@ -74,16 +100,7 @@ tabSizeInput.addEventListener("change", () => {
     tabSize = parseInt(tabSizeInput.value);
     console.log(`Tab size set to ${tabSize}`);
 });
-const fileTextarea = {
-    html: ``,
-    css: ``,
-    js: ``,
-};
-const fileCode = {
-    html: ``,
-    css: ``,
-    js: ``,
-};
+
 settingsButton.addEventListener("click", () => {
     if (settingsMenu.style.display === "block") {
         settingsMenu.style.display = "none";
@@ -155,7 +172,7 @@ runButton.addEventListener("click", () => {
 
 </html>`;
 });
-textarea.addEventListener("input", (e) => {
+textarea.addEventListener("input", () => {
     fileTextarea[activeFile] = textarea.value;
     let text = textarea.value;
     
@@ -181,6 +198,8 @@ textarea.addEventListener("input", (e) => {
 
             code.innerHTML = text;
             fileCode[activeFile] = text;
+        localStorage.setItem("code", JSON.stringify(fileCode));
+        localStorage.setItem("textarea", JSON.stringify(fileTextarea));
 });
 textarea.addEventListener("scroll", () => {
   const highlight = document.querySelector(".highlight");
@@ -197,4 +216,5 @@ toggleTheme.addEventListener("click", () => {
 	moon.classList.toggle("active");
 	prefersDark = map[prefersDark];
     applyTheme();
+    localStorage.setItem("theme", prefersDark);
 });
