@@ -54,16 +54,16 @@ const codeColors = {
   },
 };
 maximizeButton.addEventListener("click", () => {
-    const textContainer = document.querySelector(".text-container");
-    textContainer.style.display = "none";
-    maximizeButton.style.display = "none";
-    minimizeButton.style.display = "block";
+  const textContainer = document.querySelector(".text-container");
+  textContainer.style.display = "none";
+  maximizeButton.style.display = "none";
+  minimizeButton.style.display = "block";
 });
-minimizeButton.addEventListener("click", () => {    
-    const textContainer = document.querySelector(".text-container");
-    textContainer.style.display = "flex";
-    maximizeButton.style.display = "block";
-    minimizeButton.style.display = "none";
+minimizeButton.addEventListener("click", () => {
+  const textContainer = document.querySelector(".text-container");
+  textContainer.style.display = "flex";
+  maximizeButton.style.display = "block";
+  minimizeButton.style.display = "none";
 });
 const toggleTheme = document.querySelector(".rectangle");
 let prefersDark = localStorage.getItem("theme") || "light";
@@ -221,8 +221,13 @@ textarea.addEventListener("input", () => {
     );
   } else if (activeFile === "css") {
     refined = refined.replace(
-      /(\b(?:px|rem|vh|vw|em)\b|%|!important)/g,
-      `<span style='color: ${codeColor.css.elements};'>$1</span>`,
+      /(?<![a-zA-Z])(\d*\.?\d+)?(px|rem|vh|vw|em)\b|%|!important/g,
+      (match, numberPart, unitPart) => {
+        if (unitPart) {
+          return `${numberPart || ""}<span style='color: ${codeColor.css.elements};'>${unitPart}</span>`;
+        }
+        return `<span style='color: ${codeColor.css.elements};'>${match}</span>`;
+      },
     );
   } else if (activeFile === "js") {
     refined = refined.replace(
