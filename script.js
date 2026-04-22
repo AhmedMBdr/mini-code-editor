@@ -8,9 +8,9 @@ const runButton = document.querySelector(".run");
 const maximizeButton = document.querySelector(".maximize");
 const minimizeButton = document.querySelector(".minimize");
 const textContainer = document.querySelector(".text-container");
-textContainer.style.flexBasis = localStorage.getItem("textContainerWidth") ;
-  const iframe = document.querySelector(".preview");
-  let resizing = false;
+textContainer.style.flexBasis = localStorage.getItem("textContainerWidth");
+const iframe = document.querySelector(".preview");
+let resizing = false;
 const dark = ["black", "rgb(30, 30, 30)", "rgb(70, 70, 70)", "rgb(50, 50, 50)"];
 const light = [
   "white",
@@ -98,7 +98,6 @@ function applyTheme() {
   colorSelectedButton();
 }
 
-
 let isResizing = false;
 let startX;
 let startWidth;
@@ -141,16 +140,52 @@ document.addEventListener("mouseup", () => {
 const fileTextarea = localStorage.getItem("textarea")
   ? JSON.parse(localStorage.getItem("textarea"))
   : {
-      html: ``,
-      css: ``,
-      js: ``,
+      html: `<h1 class="title"> Hello World! </h1>
+`,
+      css: `*{
+    padding:0;
+    margin:0;
+}
+html , body {
+    height:100%;
+}
+body {
+    background-image: linear-gradient(45deg , orange , orangered);
+    display : flex;
+    align-items : center;
+    justify-content: center;
+}
+.title{
+    color : white;
+    animation : slide 0.6s 0.3s ease both;
+    cursor: pointer;
+    transition: filter 0.3s;
+}
+.title:not(:hover){
+    filter:blur(3px);
+}
+@keyframes slide {
+    from {
+        transform : translateY(-50px);
+        opacity : 0;
+    }
+    to {
+        transform : translateY(0px);
+        opacity : 1;
+    }
+}`,
+      js: `const title = document.querySelector(".title");
+title.addEventListener("click",()=>{
+    alert("Hello World!");
+});`,
     };
 const fileCode = localStorage.getItem("code")
   ? JSON.parse(localStorage.getItem("code"))
   : {
-      html: ``,
-      css: ``,
-      js: ``,
+      html: `<span style='color: rgb(99,209,109);'>&lt;h1 class="title"&gt;</span> Hello World! <span style='color: rgb(99,209,109);'>&lt;/h1&gt;</span>
+`,
+      css: `*{<br>    padding:0;<br>    margin:0;<br>}<br>html , body {<br>    height:100<span style='color: tomato;'>%</span>;<br>}<br>body {<br>    background-image: linear-gradient(45deg , orange , orangered);<br>    display : flex;<br>    align-items : center;<br>    justify-content: center;<br>}<br>.title{<br>    color : white;<br>    animation : slide 0.6s 0.3s ease both;<br>    cursor: pointer;<br>    transition: filter 0.3s;<br>}<br>.title:not(:hover){<br>    filter:blur(3<span style='color: tomato;'>px</span>);<br>}<br>@keyframes slide {<br>    from {<br>        transform : translateY(-50<span style='color: tomato;'>px</span>);<br>        opacity : 0;<br>    }<br>    to {<br>        transform : translateY(0<span style='color: tomato;'>px</span>);<br>        opacity : 1;<br>    }<br>}`,
+      js: `<span style='color: tomato;'>const</span> title = document.querySelector(".title");<br>title.addEventListener("click",()=&gt;{<br>    alert("Hello World!");<br>});`,
     };
 window.onload = () => {
   const htmlButton = toolbar.querySelector(".html-button");
@@ -168,6 +203,23 @@ window.onload = () => {
   }
   textarea.value = fileTextarea[activeFile];
   code.innerHTML = fileCode[activeFile];
+  iframe.srcdoc = `<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>${fileTextarea.css}</style>
+</head>
+
+<body>
+    <main>
+        ${fileTextarea.html}
+    </main>
+	<script>${fileTextarea.js.replace(/<\/script>/g, "<\\/script>")}</script>
+</body>
+
+</html>`;
 };
 let tabSize = 4;
 const tabSizeInput = settingsMenu.querySelector("#tab-size");
