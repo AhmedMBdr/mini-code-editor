@@ -53,6 +53,7 @@ body {
     display: flex;
     font-size: larger;
     gap :0;
+    flex: auto;
     justify-content: center;
     align-items: center;
     border-right : 1px solid var(--secondary);
@@ -67,11 +68,14 @@ body {
     
 }
 .text-container {
-    max-width : 575px;
     background-color: whitesmoke;
     display: flex;
+    flex: 0 0;
+    min-width: 510px;
+    max-width: 75%;
+    position: relative;
     flex-direction: column;
-    border-right : 2px solid var(--secondary);
+    border-right : 5px solid var(--secondary);
 
 }
 .toolbar {
@@ -111,7 +115,7 @@ body {
 
 .settings-menu{
     position: absolute;
-    transform: translate(-40% ,-100%);
+    transform: translate(-30% ,-100%);
     background-color: var(--primary);
     border : 2px solid var(--secondary);
     padding : 10px;
@@ -146,6 +150,8 @@ img:not(.sun):not(.moon){
 .rectangle{
     display:flex;
     flex-direction: column;
+    max-width: 125px;
+    min-width:50px;
     justify-content: center;
     align-items: center;
     width: 17.4%;
@@ -163,7 +169,7 @@ img:not(.sun):not(.moon){
 }
 .circle {
     background-color: white;
-    transform :translate(-75%);
+    margin-left : 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -171,10 +177,10 @@ img:not(.sun):not(.moon){
     height: 50px;
     border-radius: 50%;
     border : 3px solid black;
-    transition :  transform 0.6s , background-color 0.6s , border-color 0.6s;
+    transition :  margin-left 0.6s , background-color 0.6s , border-color 0.6s;
 }
 .circle.active {
-    transform: translate(75%);
+    margin-left : -100%;
     background-color: black;
     border-color: white;
 }
@@ -200,7 +206,7 @@ input:focus{
     position : absolute;
     top:7%;
     z-index: 100;
-    left : 21%;
+    left : 70%;
     background-color: rgb(99,209,109);
     border: 1px solid rgb(96,152,44);
     outline : 1px solid rgb(46,71,31);
@@ -234,7 +240,7 @@ input:focus{
    font-size : 14px;
    line-height: 1.5;
    white-space : pre-wrap;
-   overflow: auto;
+   overflow:auto;
    resize: none;
    border: none;
 }

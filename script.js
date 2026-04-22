@@ -7,6 +7,10 @@ const settingsMenu = document.querySelector(".settings-menu");
 const runButton = document.querySelector(".run");
 const maximizeButton = document.querySelector(".maximize");
 const minimizeButton = document.querySelector(".minimize");
+const textContainer = document.querySelector(".text-container");
+textContainer.style.flexBasis = localStorage.getItem("textContainerWidth") ;
+  const iframe = document.querySelector(".preview");
+  let resizing = false;
 const dark = ["black", "rgb(30, 30, 30)", "rgb(70, 70, 70)", "rgb(50, 50, 50)"];
 const light = [
   "white",
@@ -54,13 +58,11 @@ const codeColors = {
   },
 };
 maximizeButton.addEventListener("click", () => {
-  const textContainer = document.querySelector(".text-container");
   textContainer.style.display = "none";
   maximizeButton.style.display = "none";
   minimizeButton.style.display = "block";
 });
 minimizeButton.addEventListener("click", () => {
-  const textContainer = document.querySelector(".text-container");
   textContainer.style.display = "flex";
   maximizeButton.style.display = "block";
   minimizeButton.style.display = "none";
@@ -87,14 +89,55 @@ function applyTheme() {
     "--code",
     codeColors[prefersDark]["background"],
   );
-  if(activeFile === "html"){
-  document.documentElement.style.setProperty(
-    "--codeText",
-    codeColors[prefersDark]["color"],
-  );
-}
+  if (activeFile === "html") {
+    document.documentElement.style.setProperty(
+      "--codeText",
+      codeColors[prefersDark]["color"],
+    );
+  }
   colorSelectedButton();
 }
+
+
+let isResizing = false;
+let startX;
+let startWidth;
+
+// detect hover near right edge
+textContainer.addEventListener("mousemove", (e) => {
+  const rect = textContainer.getBoundingClientRect();
+  const nearRight = e.clientX > rect.right - 8;
+
+  textContainer.style.cursor = nearRight ? "ew-resize" : "default";
+});
+
+// start resizing
+textContainer.addEventListener("mousedown", (e) => {
+  const rect = textContainer.getBoundingClientRect();
+  const nearRight = e.clientX > rect.right - 8;
+
+  if (!nearRight) return;
+
+  isResizing = true;
+  startX = e.clientX;
+  startWidth = rect.width;
+  iframe.style.pointerEvents = "none";
+});
+
+// resize
+document.addEventListener("mousemove", (e) => {
+  if (!isResizing) return;
+
+  const dx = e.clientX - startX;
+  textContainer.style.flexBasis = Math.max(200, startWidth + dx) + "px";
+});
+
+// stop resizing
+document.addEventListener("mouseup", () => {
+  isResizing = false;
+  iframe.style.pointerEvents = "auto";
+  localStorage.setItem("textContainerWidth", textContainer.style.flexBasis);
+});
 const fileTextarea = localStorage.getItem("textarea")
   ? JSON.parse(localStorage.getItem("textarea"))
   : {
@@ -141,6 +184,7 @@ settingsButton.addEventListener("click", () => {
   }
   settingsButton.classList.toggle("active");
 });
+
 setting.appendChild(settingsMenu);
 textarea.addEventListener("keydown", (e) => {
   if (e.key === "Tab") {
@@ -188,7 +232,6 @@ toolbarButtons.forEach((child) => {
   });
 });
 runButton.addEventListener("click", () => {
-  const iframe = document.querySelector(".preview");
   iframe.srcdoc = `<!DOCTYPE html>
 <html lang="en">
 
