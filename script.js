@@ -225,7 +225,6 @@ let tabSize = 4;
 const tabSizeInput = settingsMenu.querySelector("#tab-size");
 tabSizeInput.addEventListener("change", () => {
   tabSize = parseInt(tabSizeInput.value);
-  console.log(`Tab size set to ${tabSize}`);
 });
 
 settingsButton.addEventListener("click", () => {
@@ -256,7 +255,7 @@ textarea.addEventListener("keydown", (e) => {
 function colorSelectedButton() {
   toolbarButtons.forEach((button) => {
     if (button.classList.contains(`${activeFile}-button`)) {
-      button.style.backgroundColor = theme[prefersDark][0];
+      button.style.backgroundColor = codeColors[prefersDark]["background"];
     } else {
       button.style.backgroundColor = "transparent";
     }
@@ -264,7 +263,7 @@ function colorSelectedButton() {
 }
 toolbarButtons.forEach((child) => {
   child.addEventListener("click", () => {
-    child.style.backgroundColor = theme[prefersDark][0];
+    child.style.backgroundColor = codeColors[prefersDark]["background"];
     activeFile = child.classList.contains("html-button")
       ? "html"
       : child.classList.contains("css-button")
